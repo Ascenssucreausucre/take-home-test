@@ -23,6 +23,10 @@ class UrlStore {
   clear(): void {
     this.store.clear();
   }
+
+  getAll(): UrlEntry[] {
+    return Array.from(this.store.values());
+  }
 }
 
 export const urlStore = new UrlStore();

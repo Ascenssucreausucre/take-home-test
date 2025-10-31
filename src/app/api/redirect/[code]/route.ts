@@ -1,13 +1,16 @@
 import { urlStore } from "@/app/lib/store";
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function GET(
   req: NextRequest,
-  { params }: { params: { code: string } }
+  context: { params: Promise<{ code: string }> }
 ) {
   try {
-    const { code } = await params;
+    const { code } = await context.params;
     const existing = urlStore.has(code);
+    console.log(existing);
     if (!existing) {
       return NextResponse.json(
         { error: "No short URL found" },

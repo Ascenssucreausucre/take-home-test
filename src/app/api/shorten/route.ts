@@ -2,6 +2,8 @@ import { generateShortCode } from "@/app/lib/generator";
 import { urlStore } from "@/app/lib/store";
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function POST(req: NextRequest) {
   try {
     const { originalUrl } = await req.json();
