@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     const entry = urlStore.create(originalUrl, shortCode);
 
-    const baseUrl = "https://cool-domain-name.com";
+    const baseUrl = "http://localhost:3000";
     const shortUrl = `${baseUrl}/${shortCode}`;
 
     return NextResponse.json({

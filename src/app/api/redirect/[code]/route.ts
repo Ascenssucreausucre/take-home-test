@@ -10,15 +10,15 @@ export async function GET(
   try {
     const { code } = await context.params;
     const existing = urlStore.has(code);
-    console.log(existing);
-    if (!existing) {
-      return NextResponse.json(
-        { error: "No short URL found" },
-        { status: 400 }
-      );
-    }
+    // if (!existing) {
+    //   return NextResponse.json(
+    //     { error: "No short URL found" },
+    //     { status: 400 }
+    //   );
+    // }
     const originalUrl = urlStore.get(code);
-    if (!originalUrl || typeof originalUrl !== "string") {
+    console.log({ existing, code, originalUrl });
+    if (!originalUrl) {
       return NextResponse.json(
         { error: "No related URL found" },
         { status: 400 }
