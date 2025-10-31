@@ -74,28 +74,30 @@ npm run dev
 **Créer une URL courte**
 POST /api/shorten
 Body JSON :
-{
+```json{
   "originalUrl": "https://example.com"
 }
+```
 Réponse : 
-{
+```json{
   "shortUrl": "http://localhost:3000/abc123",
   "code": "abc123",
   "originalUrl": "https://example.com"
 }
-
+```
 **Redirection via code**
 GET /abc123 -> Redirige automatiquement
 
 **Obtention de l'URL original via code**
 /api/redirect/abc123
 Réponse :
-{
+```json{
     "originalUrl": {
         "originalUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         "shortCode": "ASlQ1B"
     }
 }
+```
 (oublions la typo)
 
 **Visualisation du storage pour debug**
