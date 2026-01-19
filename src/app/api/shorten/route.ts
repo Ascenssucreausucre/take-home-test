@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     } catch (error) {
       return NextResponse.json(
         { error: "Invalid URL format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     const entry = urlStore.create(originalUrl, shortCode);
 
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = process.env.BASE_URL || "http://localhost:3000";
     const shortUrl = `${baseUrl}/${shortCode}`;
 
     return NextResponse.json({
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     console.error(error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
