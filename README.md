@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# URL Shortener MVP
 
-## Getting Started
+Ce projet est un **raccourcisseur d’URL minimal** développé dans le cadre d’un test technique. Il permet de soumettre une URL longue et de générer une version courte qui redirige vers l’originale.
 
-First, run the development server:
+Ce MVP est conçu pour être **fonctionnel rapidement**, avec stockage en mémoire et interface simple.
+
+---
+
+## 🚀 Stack technique
+
+- **Next.js (App Router)** avec TypeScript pour le front et le back
+- **React + Tailwind CSS** pour l’interface
+- **Axios** pour les appels API
+- **In-memory store** (Map) pour les URLs raccourcies
+- Pas de base de données externe ni d’authentification
+
+---
+
+## 📦 Structure du projet
+
+/app
+/api
+/shorten/route.ts ← Endpoint POST pour créer une URL courte
+/[code]/route.ts ← Endpoint GET pour rediriger vers l’URL originale
+/page.tsx ← Page principale avec formulaire
+/lib
+store.ts ← Store en mémoire pour les URLs
+generator.ts ← Génération de codes courts aléatoires
+
+
+---
+
+## ⚡ Fonctionnalités
+
+- Soumettre une URL et recevoir une version courte
+- Vérification basique du format de l’URL
+- Gestion des collisions de codes courts
+- Redirection automatique via `/[code]`
+- Feedback visuel côté frontend (chargement, succès, erreur)
+
+---
+
+## 📌 Limitations connues
+
+- Stockage uniquement en mémoire (les URLs sont perdues au redémarrage du serveur)
+- Pas de gestion des URLs personnalisées
+- Pas de modération ou filtrage d’URLs malveillantes
+- Pas de suivi des clics
+
+---
+
+## 🔧 Installation & démarrage
+
+1. Cloner le repo :
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Ascenssucreausucre/take-home-test.git
+cd take-home-test
 ```
+2. Installer les dépendances :
+```bash
+npm install
+```
+3. Lancer le serveur de développement
+```bash
+npm run dev
+```
+4. Ouvrir l'application dans votre navigateur :
+   [http://localhost:3000]
+   
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Utilisation
+**Créer une URL courte**
+POST /api/shorten
+Body JSON :
+```json{
+  "originalUrl": "https://example.com"
+}
+```
+Réponse : 
+```json{
+  "shortUrl": "http://localhost:3000/abc123",
+  "code": "abc123",
+  "originalUrl": "https://example.com"
+}
+```
+**Redirection via code**
+GET /abc123 -> Redirige automatiquement
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Obtention de l'URL original via code**
+/api/redirect/abc123
+Réponse :
+```json{
+    "originalUrl": {
+        "originalUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "shortCode": "ASlQ1B"
+    }
+}
+```
+(oublions la typo)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Visualisation du storage pour debug**
+GET /api/reflect
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Décisions techniques
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js + TypeScript : un seul framework pour front et back, simplifie le routing et le typage.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Map en mémoire : rapide à mettre en place pour un MVP.
 
-## Deploy on Vercel
+- Codes courts aléatoires : génération simple avec vérification de collisions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- API REST simple : POST pour créer, GET pour rediriger.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔮 Améliorations futures
+
+- Si le projet devait être développé plus loin :
+
+- Persistance avec une base de données (SQLite, Postgres, Redis…)
+
+- Authentification et gestion des utilisateurs
+
+- Codes personnalisés payants
+
+- Modération et filtrage d’URLs malveillantes
+
+- Suivi des clics et analytics
+
+- Interface utilisateur plus complète avec historique des URLs
+
+---
+
+## 👨‍💻 Auteur
+
+Florian Amiot – Test technique pour Platane.io
